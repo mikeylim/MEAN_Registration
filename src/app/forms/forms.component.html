@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="jumbotron text-center">
+    <h1>Registration</h1>
+  </div>
+
+  <div class="alert alert-success text-center" role="alert" [hidden]="!successful">
+      Thank you for registering with us, <b>{{ user.first_name }}.</b> We just sent you a confirmation email
+      at <a>{{ user.email }}</a>, and we will send all mail to <b>{{ user.address }} {{ user.unit}} {{ user.city }} {{ user.state}}.</b>
+      <br>
+      
+      Have a wonderful day!
+  </div>
+
+  <div>
+    <form #userForm="ngForm" (submit)="onSubmit()">
+      <div id="content">
+        <h3>Account Information</h3>
+        <!-- firstname -->
+        <label for="first_name">*First Name:</label> 
+        <input type="text" name="first_name" id="first_name" 
+        required minlength="2" maxlength="20" [(ngModel)]="user.first_name" #first_name="ngModel">         
+        
+        <div class="errors" *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)">
+          <p *ngIf="first_name.errors.required">First name is required.</p>
+          <p *ngIf="(first_name.errors.minlength && !first_name.errors.required )">First name must be at least 2 characters long.</p>
+        </div><br>       
+       
+        <!-- lastname -->
+        <label for="last_name">*Last Name:</label> 
+        <input type="text" name="last_name" id="last_name" 
+        required minlength="2" maxlength="20" [(ngModel)]="user.last_name" #last_name="ngModel">
+        
+        <div class="errors" *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
+          <p *ngIf="last_name.errors.required">Last name is required.</p>
+          <p *ngIf="(last_name.errors.minlength && !last_name.errors.required )">Last name must be at least 2 characters long.</p>
+        </div><br>
+
+        <!-- email -->
+        <label for="email">*Email:</label> 
+        <input type="text" name="email" id="email"
+        required pattern="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" 
+        [(ngModel)]="user.email" #email="ngModel">
+
+        <div class="errors" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <p *ngIf="email.errors.required">Email is required.</p>
+          <p *ngIf="email.errors.pattern">Please enter valid email.</p>
+        </div><br>
+
+        <!-- password -->
+        <label for="password">*Password:</label> 
+        <input type="password" name="password" id="password"
+        required pattern="^([a-zA-Z0-9@*#]{8,50})$" [(ngModel)]="user.password" #password="ngModel"> 
+        
+        <div class="errors" *ngIf="password.invalid && (password.dirty || password.touched)">
+          <p *ngIf="password.errors.required">Password is required.</p>
+          <p *ngIf="password.errors.pattern">Password must be at least 8 characters.</p>
+        </div><br>
+
+        <!-- password confirmation -->
+        <label for="cpassword">*Password Confirmation:</label> 
+        <input type="password" name="cpassword" id="cpassword"
+        required [(ngModel)]="user.cpassword" #cpassword="ngModel">
+
+        <div class="errors" *ngIf="cpassword.invalid && (cpassword.dirty || cpassword.touched)">
+          <p *ngIf="cpassword.errors.required">Password confirmation is required.</p>
+          <p *ngIf="password.errors.pattern">Password confirmation must match the Password.</p>
+        </div> <br>
+
+        <!-- address -->
+        <label for="address">*Street Address:</label> 
+        <input type="text" name="address" id="address"
+        required [(ngModel)]="user.address" #address="ngModel"> 
+        
+        <div class="errors" *ngIf="address.invalid && (address.dirty || address.touched)">
+          <p *ngIf="address.errors.required">Street address is required.</p>
+        </div> <br>
+
+        <!-- unit -->
+        <label for="unit">Unit/Apt #:</label> 
+        <input type="text" name="unit" id="unit"
+        [(ngModel)]="user.unit" #unit="ngModel"> <br>
+
+        <!-- city -->
+        <label for="city">*City:</label> 
+        <input type="text" name="city" id="city"
+        [(ngModel)]="user.city" #city="ngModel">
+
+        <div class="errors" *ngIf="city.invalid && (city.dirty || city.touched)">
+          <p *ngIf="city.errors.required">City is required.</p>
+        </div> <br>
+
+        <!-- state -->
+        <label for="state">*State:</label>
+        <select name="state" required [(ngModel)]="user.state" #state="ngModel">
+          <option *ngFor="let s of states" [value]="s">{{s}}</option>
+        </select>
+
+        <div class="errors" *ngIf="state.invalid && (state.dirty || state.touched)">
+          <p *ngIf="state.errors.required">State is required.</p>
+        </div> <br>
+
+        <!-- lucky -->
+        <label>*I'm feeling lucky:</label> 
+        <input type="radio"  id="yes" name="lucky" value="true" [(ngModel)]="user.lucky" required #lucky="ngModel">Yes
+        <input type="radio"  id="no" name="lucky" value="false" [(ngModel)]="user.lucky" required #lucky="ngModel">No
+
+        <div class="errors" *ngIf="lucky.invalid && (lucky.dirty || lucky.touched)">
+          <p *ngIf="lucky.errors.required">Choosing how you feel is required.</p>
+        </div> <br>
+      </div>
+
+      <div class="submit text-center">
+        <input data-toggle="tooltip" title="Register button is disabled until all validation is passed." [disabled]="!userForm.form.valid" id="submit" type="submit" value="Register">
+      </div>
+    </form>
+  </div>
+</body>
+</html>

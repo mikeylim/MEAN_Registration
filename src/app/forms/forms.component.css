@@ -1,0 +1,29 @@
+label{
+    display: inline-block;
+    width: 200px;
+    text-align: right;
+}
+#submit{
+    width:  800px;
+    height: 40px;
+    background-color: grey;
+    box-shadow: 1px 2px black;
+    margin-top: 10px;
+    border: 2px solid black;
+}
+#content{
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 2px solid black;
+}
+p{
+    color: red;
+    display: inline-block;
+}
+.errors{
+    display: inline-block;
+}
+select{
+    width: 170px;
+}
