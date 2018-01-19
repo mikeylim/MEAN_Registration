@@ -1,5 +1,7 @@
 # Registration
 
+![registration](https://user-images.githubusercontent.com/13756917/35131691-77c83762-fc7c-11e7-9d3d-fb0780aa7f75.png)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.4.
 
 ## Development server
